@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore } from "redux";
-import reducer from "./Reducer/reducer";
+import taskReducer from "./task";
 
-const store = createStore(reducer);
+const store = createStore(taskReducer);
 
 export default store;

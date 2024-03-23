@@ -1,6 +1,5 @@
-import { ADD_TASK, REMOVE_TASK } from "./Store/TYPES";
-import store from "./Store/store";
-import { addTask, completeTask, removeTask } from "./Store/Action/action";
+import store from "./Store/configureStore";
+import { addTask, completeTask, removeTask } from "./Store/task";
 
 //subscribe
 const unsubscribe = store.subscribe(() => {
@@ -10,11 +9,10 @@ const unsubscribe = store.subscribe(() => {
 //store.dispatch({type, payload})
 store.dispatch(addTask("Walk the dog"));
 console.log(store.getState());
-// store.dispatch(removeTask(1));
-// console.log(store.getState());
-
-store.dispatch(completeTask(1));
-
-unsubscribe();
 store.dispatch(addTask("Walk the dog 2"));
 console.log(store.getState());
+store.dispatch(completeTask(1));
+store.dispatch(removeTask(1));
+console.log(store.getState());
+
+unsubscribe();
