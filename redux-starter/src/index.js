@@ -15,7 +15,7 @@ store.dispatch(completeTask({ id: 1 }));
 console.log(store.getState());
 
 store.dispatch(addEmployee({ name: "John", age: 25 }));
-
+store.dispatch({ type: "SHOW_ERROR", payload: { message: "Error" } });
 console.log(store.getState());
 
 //store.dispatch({type, payload})
