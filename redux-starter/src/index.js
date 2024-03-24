@@ -1,4 +1,5 @@
 import store from "./Store/configureStore";
+import { addEmployee } from "./Store/employee";
 import { addTask, completeTask, removeTask, fetchTodos } from "./Store/task";
 
 //subscribe
@@ -11,6 +12,10 @@ store.dispatch(addTask({ task: "Walk the dog 2" }));
 console.log(store.getState());
 
 store.dispatch(completeTask({ id: 1 }));
+console.log(store.getState());
+
+store.dispatch(addEmployee({ name: "John", age: 25 }));
+
 console.log(store.getState());
 
 //store.dispatch({type, payload})
