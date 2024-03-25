@@ -36,15 +36,19 @@ const taskSlice = createSlice({
       return state.tasks.filter((todo) => todo.id !== action.payload);
     },
     completeTask: (state, action) => {
-      return state.tasks.map((todo) => {
-        if (todo.id === action.payload) {
-          return {
-            ...todo,
-            completed: true,
-          };
-        }
-        return todo;
-      });
+      console.log("Action Complete task: ", action.payload);
+      return {
+        ...state,
+        tasks: state.tasks.map((todo) => {
+          if (todo.id === action.payload.id) {
+            return {
+              ...todo,
+              completed: action.payload.completed,
+            };
+          }
+          return todo;
+        }),
+      };
     },
   },
   // extraReducers: (builder) => {
@@ -131,6 +135,16 @@ export const addNewTask = (task) => {
     method: "POST",
     data: task,
     onSuccess: addTask.type,
+    onError: apiRequestedFailed.type,
+  });
+};
+
+export const updateTaskToComplete = (task) => {
+  return apiCallBegan({
+    url: `${url}/${task.id}`,
+    method: "PATCH",
+    data: task,
+    onSuccess: completeTask.type,
     onError: apiRequestedFailed.type,
   });
 };

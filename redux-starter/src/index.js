@@ -10,6 +10,7 @@ import {
   fetchTasks,
   loadTasks,
   addNewTask,
+  updateTaskToComplete,
 } from "./Store/task";
 
 //create async thunk
@@ -19,7 +20,9 @@ import {
 //async method with api middleware
 
 store.dispatch(loadTasks());
-store.dispatch(addNewTask({ task: "Go to sleep" }));
+// store.dispatch(addNewTask({ task: "Go to sleep" }));
+store.dispatch(updateTaskToComplete({ id: 6, completed: true }));
+
 // store.dispatch({
 //   type: "apiRequest",
 //   payload: {
