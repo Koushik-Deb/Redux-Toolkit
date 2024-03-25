@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { apiCallBegan } from "./api";
 import axios from "../utils/https";
 
 // Reducer // Create Slice
@@ -65,8 +66,14 @@ const taskSlice = createSlice({
   // },
 });
 
-export const { addTask, removeTask, completeTask, getTasks } =
-  taskSlice.actions;
+export const {
+  apiRequested,
+  apiRequestedFailed,
+  addTask,
+  removeTask,
+  completeTask,
+  getTasks,
+} = taskSlice.actions;
 export default taskSlice.reducer;
 
 // Action Types
@@ -111,3 +118,13 @@ export default taskSlice.reducer;
 //     });
 //   });
 // });
+const url = "/tasks";
+
+export const loadTasks = () => {
+  return apiCallBegan({
+    url: url,
+    onStart: apiRequested.type,
+    onSuccess: getTasks.type,
+    onError: apiRequestedFailed.type,
+  });
+};

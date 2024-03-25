@@ -1,5 +1,5 @@
 import store from "./Store/configureStore";
-import { apiCallBegan } from "./Store/api";
+
 import axios from "axios";
 import { addEmployee } from "./Store/employee";
 import {
@@ -8,6 +8,7 @@ import {
   removeTask,
   getTasks,
   fetchTasks,
+  loadTasks,
 } from "./Store/task";
 
 //create async thunk
@@ -16,14 +17,7 @@ import {
 
 //async method with api middleware
 
-store.dispatch(
-  apiCallBegan({
-    url: "/tasks",
-    onStart: "tasks/apiRequested",
-    onSuccess: "tasks/getTasks",
-    onError: "tasks/apiRequestedFailed",
-  })
-);
+store.dispatch(loadTasks());
 // store.dispatch({
 //   type: "apiRequest",
 //   payload: {
