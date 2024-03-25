@@ -1,4 +1,5 @@
 import store from "./Store/configureStore";
+import { apiCallBegan } from "./Store/api";
 import axios from "axios";
 import { addEmployee } from "./Store/employee";
 import {
@@ -14,16 +15,25 @@ import {
 // store.dispatch(fetchTasks());
 
 //async method with api middleware
-store.dispatch({
-  type: "apiRequest",
-  payload: {
+
+store.dispatch(
+  apiCallBegan({
     url: "/tasks",
-    method: "GET",
     onStart: "tasks/apiRequested",
     onSuccess: "tasks/getTasks",
     onError: "tasks/apiRequestedFailed",
-  },
-});
+  })
+);
+// store.dispatch({
+//   type: "apiRequest",
+//   payload: {
+//     url: "/tasks",
+//     method: "GET",
+//     onStart: "tasks/apiRequested",
+//     onSuccess: "tasks/getTasks",
+//     onError: "tasks/apiRequestedFailed",
+//   },
+// });
 
 // const gettingTasks = async () => {
 //   //calling api

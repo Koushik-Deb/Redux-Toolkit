@@ -1,3 +1,6 @@
+import axios from "axios";
+import { apiCallBegan } from "../api";
+
 // Action Object for API
 // {
 //   type: "fetchTasks",
@@ -11,7 +14,7 @@
 // }
 
 const api = (store) => (next) => async (action) => {
-  if (action.type !== "apiRequest") {
+  if (action.type !== apiCallBegan.type) {
     return next(action);
   }
   const { url, method, data, onStart, onSuccess, onError } = action.payload;
@@ -25,7 +28,7 @@ const api = (store) => (next) => async (action) => {
       data,
     });
     console.log("Response: ", response.data);
-    store.dispatch({ type: onSuccess, payload: response.data });
+    store.dispatch({ type: onSuccess, payload: { tasks: response.data } });
   } catch (error) {
     store.dispatch({ type: onError, payload: { error: error.message } });
     store.dispatch({ type: "SHOW_ERROR", payload: { error: error.message } });
