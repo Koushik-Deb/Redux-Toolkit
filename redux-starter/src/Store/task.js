@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../utils/https";
 
 // Reducer // Create Slice
 let id = 0;
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const fetchTasks = createAsyncThunk("fetchTasks", async () => {
-  const response = await axios.get("http://localhost:5000/api/tasks");
+  const response = await axios.get("/tasks");
   return { tasks: response.data };
 });
 
