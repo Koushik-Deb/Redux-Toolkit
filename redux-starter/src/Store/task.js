@@ -30,11 +30,7 @@ const taskSlice = createSlice({
       state.loading = false;
     },
     addTask: (state, action) => {
-      state.tasks.push({
-        id: ++id,
-        task: action.payload,
-        completed: false,
-      });
+      state.tasks.push(action.payload.tasks);
     },
     removeTask: (state, action) => {
       return state.tasks.filter((todo) => todo.id !== action.payload);
@@ -125,6 +121,16 @@ export const loadTasks = () => {
     url: url,
     onStart: apiRequested.type,
     onSuccess: getTasks.type,
+    onError: apiRequestedFailed.type,
+  });
+};
+
+export const addNewTask = (task) => {
+  return apiCallBegan({
+    url: url,
+    method: "POST",
+    data: task,
+    onSuccess: addTask.type,
     onError: apiRequestedFailed.type,
   });
 };
