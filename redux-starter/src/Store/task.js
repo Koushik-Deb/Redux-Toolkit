@@ -33,7 +33,11 @@ const taskSlice = createSlice({
       state.tasks.push(action.payload.tasks);
     },
     removeTask: (state, action) => {
-      return state.tasks.filter((todo) => todo.id !== action.payload);
+      console.log("Action Remove task: ", action.payload, state);
+      return {
+        ...state,
+        tasks: state.tasks.filter((todo) => todo.id !== action.payload.id),
+      };
     },
     completeTask: (state, action) => {
       console.log("Action Complete task: ", action.payload);
@@ -145,6 +149,15 @@ export const updateTaskToComplete = (task) => {
     method: "PATCH",
     data: task,
     onSuccess: completeTask.type,
+    onError: apiRequestedFailed.type,
+  });
+};
+
+export const deleteTask = (task) => {
+  return apiCallBegan({
+    url: `${url}/${task.id}`,
+    method: "DELETE",
+    onSuccess: removeTask.type,
     onError: apiRequestedFailed.type,
   });
 };
