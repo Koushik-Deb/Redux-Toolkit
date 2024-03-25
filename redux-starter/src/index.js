@@ -10,7 +10,20 @@ import {
 } from "./Store/task";
 
 //create async thunk
-store.dispatch(fetchTasks());
+
+// store.dispatch(fetchTasks());
+
+//async method with api middleware
+store.dispatch({
+  type: "apiRequest",
+  payload: {
+    url: "/tasks",
+    method: "GET",
+    onSuccess: "tasks/getTasks",
+    onError: "SHOW_ERROR",
+  },
+});
+
 // const gettingTasks = async () => {
 //   //calling api
 //   //fetch or axios
