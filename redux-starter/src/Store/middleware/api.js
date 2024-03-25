@@ -14,8 +14,9 @@ const api = (store) => (next) => async (action) => {
   if (action.type !== "apiRequest") {
     return next(action);
   }
-  const { url, method, data, onSuccess, onError } = action.payload;
-  console.log("what the hell is going on here: ", action.payload);
+  const { url, method, data, onStart, onSuccess, onError } = action.payload;
+
+  if (onStart) store.dispatch({ type: onStart });
   try {
     const response = await axios.request({
       baseURL: "http://localhost:5000/api",
@@ -27,6 +28,7 @@ const api = (store) => (next) => async (action) => {
     store.dispatch({ type: onSuccess, payload: response.data });
   } catch (error) {
     store.dispatch({ type: onError, payload: { error: error.message } });
+    store.dispatch({ type: "SHOW_ERROR", payload: { error: error.message } });
   }
 
   //   axios

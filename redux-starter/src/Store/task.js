@@ -9,17 +9,24 @@ const initialState = {
   error: null,
 };
 
-export const fetchTasks = createAsyncThunk("fetchTasks", async () => {
-  const response = await axios.get("/tasks");
-  return { tasks: response.data };
-});
+// export const fetchTasks = createAsyncThunk("fetchTasks", async () => {
+//   const response = await axios.get("/tasks");
+//   return { tasks: response.data };
+// });
 
 const taskSlice = createSlice({
   name: "tasks",
   initialState: initialState,
   reducers: {
+    apiRequested: (state, action) => {
+      state.loading = true;
+    },
+    apiRequestedFailed: (state, action) => {
+      state.loading = false;
+    },
     getTasks: (state, action) => {
       state.tasks = action.payload.tasks;
+      state.loading = false;
     },
     addTask: (state, action) => {
       state.tasks.push({
@@ -43,19 +50,19 @@ const taskSlice = createSlice({
       });
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchTasks.pending, (state, action) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchTasks.fulfilled, (state, action) => {
-      state.tasks = action.payload.tasks;
-      state.loading = false;
-    });
-    builder.addCase(fetchTasks.rejected, (state, action) => {
-      state.error = action.error.message;
-      state.loading = false;
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(fetchTasks.pending, (state, action) => {
+  //     state.loading = true;
+  //   });
+  //   builder.addCase(fetchTasks.fulfilled, (state, action) => {
+  //     state.tasks = action.payload.tasks;
+  //     state.loading = false;
+  //   });
+  //   builder.addCase(fetchTasks.rejected, (state, action) => {
+  //     state.error = action.error.message;
+  //     state.loading = false;
+  //   });
+  // },
 });
 
 export const { addTask, removeTask, completeTask, getTasks } =
